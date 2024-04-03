@@ -35,9 +35,8 @@ jobs:
       sanitizers: true  
 
   build-dev-packages-s390x:
-    runs-on: [self-hosted, S390X]
     needs: [fetch-version]
-    uses: ./.github/workflows/reusable_build_packages.yaml
+    uses: ./.github/workflows/reusable_build_packages_s390x.yaml
     with:
 #      arch: s390x
       version: ${{ needs.fetch-version.outputs.version }}
@@ -68,6 +67,16 @@ jobs:
       static: ${{ matrix.static != '' && true || false }}
       version: ${{ needs.fetch-version.outputs.version }}
 
+  test-dev-packages-s390x:
+    needs: [fetch-version, build-dev-packages-s390x]
+    uses: ./.github/workflows/reusable_test_packages_s390x.yaml
+    strategy:
+      fail-fast: false
+    with:
+#      arch: aarch64
+      static: ${{ matrix.static != '' && true || false }}
+      version: ${{ needs.fetch-version.outputs.version }}
+
   build-dev-minimal:
     uses: ./.github/workflows/reusable_build_dev.yaml
     with:
@@ -85,8 +94,7 @@ jobs:
       build_type: Debug
 
   build-dev-minimal-s390x:
-    runs-on: [self-hosted, S390X]
-    uses: ./.github/workflows/reusable_build_dev.yaml
+    uses: ./.github/workflows/reusable_build_dev_s390x.yaml
     with:
 #      arch: s390x
       git_ref: ${{ github.event.pull_request.head.sha }}

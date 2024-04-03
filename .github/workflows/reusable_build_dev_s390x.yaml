@@ -6,10 +6,10 @@ on:
         description: "Post-build command output"
         value: ${{ jobs.build-and-test.outputs.cmdout }}
     inputs:
-#      arch:
-#        description: x86_64 or aarch64
-#        required: true
-#        type: string
+      arch:
+        description: x86_64 or aarch64 or s390x
+        required: true
+        type: string
       minimal:
         description: Minimal build
         required: true

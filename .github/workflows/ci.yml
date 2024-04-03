@@ -38,7 +38,7 @@ jobs:
     needs: [fetch-version]
     uses: ./.github/workflows/reusable_build_packages_s390x.yaml
     with:
-#      arch: s390x
+      arch: s390x
       version: ${{ needs.fetch-version.outputs.version }}
       build_type: Debug
       sanitizers: true  
@@ -73,7 +73,7 @@ jobs:
     strategy:
       fail-fast: false
     with:
-#      arch: aarch64
+      arch: s390x
       static: ${{ matrix.static != '' && true || false }}
       version: ${{ needs.fetch-version.outputs.version }}
 
@@ -96,7 +96,7 @@ jobs:
   build-dev-minimal-s390x:
     uses: ./.github/workflows/reusable_build_dev_s390x.yaml
     with:
-#      arch: s390x
+      arch: s390x
       git_ref: ${{ github.event.pull_request.head.sha }}
       minimal: true
       build_type: Debug

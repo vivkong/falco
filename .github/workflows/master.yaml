@@ -28,6 +28,14 @@ jobs:
       version: ${{ needs.fetch-version.outputs.version }}
     secrets: inherit
 
+  build-dev-packages-s390x:
+    needs: [fetch-version]
+    uses: ./.github/workflows/reusable_build_packages_s390x.yaml
+    with:
+      arch: s390x
+      version: ${{ needs.fetch-version.outputs.version }}
+    secrets: inherit
+
   test-dev-packages:
     needs: [fetch-version, build-dev-packages]
     uses: ./.github/workflows/reusable_test_packages.yaml
@@ -47,6 +55,13 @@ jobs:
     uses: ./.github/workflows/reusable_test_packages.yaml
     with:
       arch: aarch64
+      version: ${{ needs.fetch-version.outputs.version }}
+
+  test-dev-packages-s390x:
+    needs: [fetch-version, build-dev-packages-s390x]
+    uses: ./.github/workflows/reusable_test_packages_s390x.yaml
+    with:
+      arch: s390x
       version: ${{ needs.fetch-version.outputs.version }}
 
   publish-dev-packages:

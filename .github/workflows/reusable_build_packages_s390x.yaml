@@ -2,10 +2,10 @@
 on:
   workflow_call:
     inputs:
-#      arch:
-#        description: x86_64 or aarch64
-#        required: true
-#        type: string
+      arch:
+        description: x86_64 or aarch64 or s390x
+        required: true
+        type: string
       version:
         description: The Falco version to use when building packages
         required: true

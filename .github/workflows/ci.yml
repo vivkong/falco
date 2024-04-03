@@ -32,7 +32,17 @@ jobs:
       arch: aarch64
       version: ${{ needs.fetch-version.outputs.version }}
       build_type: Debug
-      sanitizers: true
+      sanitizers: true  
+
+  build-dev-packages-s390x:
+    runs-on: [self-hosted, S390X]
+    needs: [fetch-version]
+    uses: ./.github/workflows/reusable_build_packages.yaml
+    with:
+#      arch: s390x
+      version: ${{ needs.fetch-version.outputs.version }}
+      build_type: Debug
+      sanitizers: true  
 
   test-dev-packages:
     needs: [fetch-version, build-dev-packages]
@@ -70,6 +80,15 @@ jobs:
     uses: ./.github/workflows/reusable_build_dev.yaml
     with:
       arch: aarch64
+      git_ref: ${{ github.event.pull_request.head.sha }}
+      minimal: true
+      build_type: Debug
+
+  build-dev-minimal-s390x:
+    runs-on: [self-hosted, S390X]
+    uses: ./.github/workflows/reusable_build_dev.yaml
+    with:
+#      arch: s390x
       git_ref: ${{ github.event.pull_request.head.sha }}
       minimal: true
       build_type: Debug
